@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: back
+  name: back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back
+  template:
+    metadata:
+      labels:
+        app: back
+    spec:
+      containers:
+        - image: xxxx.azurecr.io/backend:v1.0.0
+          name: back
+          resources: {}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health/liveness
+          #     port: 8081
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health/readiness
+          #     port: 8081
+      #     volumeMounts:
+      #       - name: config-volume
+      #         mountPath: /workspace/config
+      #     imagePullPolicy: Always
+      # volumes:
+      #   - name: config-volume
+      #     configMap:
+      #       name: back-configmap

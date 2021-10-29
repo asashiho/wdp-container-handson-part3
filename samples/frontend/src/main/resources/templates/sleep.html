@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Host</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.css}" rel="styleSheet" type="text/css">
+    <link rel="icon" href="/favicon.ico" />
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">サンプルアプリケーション</a>
+        </div>
+        <p th:text="${#calendars.format(#calendars.createNowForTimeZone('JST'), 'yyyy/MM/dd HH:mm')}"></p>
+    </nav>
+
+    <div class="container">
+        <div class="alert alert-dismissible alert-light">
+            <a th:text="${message}"></a>
+        </div>
+    </div>
+</body>
+
+</html>
