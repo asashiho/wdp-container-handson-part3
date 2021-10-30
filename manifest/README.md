@@ -4,34 +4,48 @@
 
 [WEB+DB PRESS Vol.126](http://xxx.com)
 
-フォルダ構成
 
-```bash
- .
-├──  backend
-│  ├──  application.properties
-│  ├──  deployment.yaml
-│  └──  service.yaml
-├──  frontend
-│  ├──  application.properties
-│  ├──  deployment.yaml
-│  └──  service.yaml
-└──  README.md
-```
+## AKSクラスタへのアプリケーションデプロイ
 
-## Deply to AKS Cluster
+AKSクラスタにアプリケーションをデプロイします
 
-### config
+### クラスタの作成
+
+azコマンドでAzureにログインします。
+
 ```bash
 az login
+```
+
+次のコマンドでAKSクラスタを作成します。
+
+```bash
+RG_NAME=aks-sample
+AKS_NAME=aks-sample
+az group create -n $RG_NAME -l japaneast
+
+az aks create \
+    -g $RG_NAME \
+    -n $AKS_NAME \
+    --node-count 2 \
+    --enable-addons monitoring \
+    --generate-ssh-keys
+```
+
+AKSクラスタへのアクセスに必要なクレデンシャルを取得し、Nodeの構成情報を確認します。
+```bash
 az aks get-credentials \
     -g spring-aks  \
     -n aks
 
+az aks install-cli
 kubectl get node
 ```
 
-### backend using Go
+
+### バックエンド(Golang版)のデプロイ 
+
+`backend`のデプロイをします。
 
 ```bash
 cd backend
@@ -40,7 +54,10 @@ kubectl apply -f service.yaml
 kubectl apply -f deployment.yaml 
 ```
 
-### backend using Java
+### バックエンド(Java版)のデプロイ 
+
+
+`backend`のデプロイをします。
 
 ```bash
 cd backend
@@ -52,7 +69,9 @@ kubectl create configmap \
 kubectl apply -f deployment.yaml 
 ```
 
-### frontend
+### フロントエンドのデプロイ 
+
+`frontend`のデプロイをします。
 
 ```bash
 cd frontend
@@ -64,22 +83,30 @@ kubectl  create configmap \
 kubectl  apply -f deployment.yaml 
 ```
 
-## Check
+## 動作確認
+
+ロードバランサのIDアドレスを確認します。
 
 ```bash
 kubectl get svc
 ```
 
-acccess using web browser
+Webブラウザで以下のURLにアクセスします。
+
 
 http://`<External IP>`/
 
+
+Podのログを確認します。
 
 ```
 kubectl logs -f <pod name>
 ```
 
-## Next Step
+## クリーンアップ
 
-[delete AKS Cluster](../xxx/)
+確認が終わったら、次のコマンドでクラスタのリソースグループを削除します。
 
+```bash
+az group delete --name $RG_NAME 
+```

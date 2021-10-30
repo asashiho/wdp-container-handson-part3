@@ -5,10 +5,12 @@
 [WEB+DB PRESS Vol.126](http://xxx.com)
 
 
+## バックエンドアプリ(Java)の開発/共有
 
-## Backend Sample using SpringBoot/WebFlux
+ここでは、SpringBoot/WebFluxで実装したバックエンドAPIのコンテナイメージを作成します。
 
-### Config
+
+環境変数にコンテナレジストリ名を設定します。
 
 ```bash
 ACR_NAME=xxx.azurecr.io
@@ -17,18 +19,21 @@ az acr login --name $ACR_NAME
 
 ### build
 
+アプリケーションのビルドとイメージの作成を行います。
+
 ```bash
 ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=$ACR_NAME/backend:v1.0.0
 ```
 
 ### share
 
+コンテナイメージをレジストリで共有します。
+
 ```bash
 docker image ls
 docker push $ACR_NAME/backend:v1.0.0
 ```
 
-## Next Step
+## 次のステップ
 
-[deploy to AKS](../manifest/)
-
+[AKSクラスタへのデプロイ](../../manifest/README.md)
