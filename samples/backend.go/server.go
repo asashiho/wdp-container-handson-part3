@@ -25,7 +25,7 @@ func main() {
 	items = append(items, product.NewItem(3, "マスカット", "皮も食べられます", 1000))
 
 	// リッスンするポート番号を指定する
-	portNumber := "8081"
+	portNumber := "8080"
 	addr := ":" + portNumber
 	l, err := net.Listen("tcp4", addr)
 	if err != nil {

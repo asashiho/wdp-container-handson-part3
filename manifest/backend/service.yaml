@@ -7,9 +7,9 @@ metadata:
 spec:
   ports:
   - name: back-port
-    port: 8081
+    port: 8080
     protocol: TCP
-    targetPort: 8081
+    targetPort: 8080
   selector:
     app: back
   type: ClusterIP
